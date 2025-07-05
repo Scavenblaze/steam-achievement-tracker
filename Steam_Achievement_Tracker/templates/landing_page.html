@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}landing{% endblock title %}
+
+{% block css %}<link rel="stylesheet" href="/static/css/landing_page.css">{% endblock css %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'landing_page' %}">
+    {% csrf_token %}
+    <div class="login-box">
+        <div class="login-header">
+            
+            <header>Hello There</header>
+            <p>Enter your steam id to track your steam achievements</p>
+        </div>
+        <div class="input-box">
+            <input type="text" class="input-field" placeholder="Steam id" name = "steam_id"autocomplete="off" required>
+        </div>
+
+        <div class="input-submit">
+            <a href="{% url "home" %}"><button class="submit-btn" id="submit"></button></a>
+            <label for="submit">Submit</label>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock content %}

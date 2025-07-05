@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %} List of Games {% endblock title %}
+{% block content %}
+
+
+<a href="{% url "home" %}"><button class="submit-btn" id="submit">go home</button></a>
+
+<p>here comes the list of games you own</p>
+
+{%if games_list%}
+
+<ol>
+    {%for game in games_list%}
+    <li>{{game.name}}</li>
+    {%endfor%}
+<ol>
+
+{%else%} <p> You don't own any games </p>
+{% endif %}
+
+<!--Example JSON Response
+{'appid': 10, 'name': 'Counter-Strike', 'img_icon_url': '6b0312cda02f5f777efa2f3318c307ff9acafbb5'},
+{'appid': 80, 'name': 'Counter-Strike: Condition Zero', 'img_icon_url': '077b050ef3e89cd84e2c5a575d78d53b54058236'}
+-->
+
+<!--TODO:
+display with clickable link:- icon::name::achievement earned/achievement total
+
+
+-->
+
+
+
+
+{% endblock content %}
