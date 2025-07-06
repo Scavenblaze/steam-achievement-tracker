@@ -12,7 +12,7 @@ class owned_Games:
         self.steam_key = steam_key
         
     def get_owned_games(self):
-        url = f"https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/"
+        url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/"
         params = {"key": self.steam_key, "steamid": self.steam_id, "include_appinfo": True, "include_played_free_games": True}
         response = requests.get(url, params=params)
         
@@ -29,28 +29,10 @@ class owned_Games:
             
 
         return filtered_result
-        
-    #FIXME: like the others    
-    def get_player_achievements(self):
-        app_id = "12210"  # gta 4 FIXME: get appid dynamic
-        url = f"https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/"
-        params = {"key": self.steam_key, "steamid": self.steam_id, "appid": app_id}
-        response = requests.get(url, params=params)
-        
-        if response.status_code != 200:
-            print(f"Error accessing steam api {response.status_code}")
-            return []
-        try:
-            game_achievement = response.json()
-        except ValueError as e:
-            print(f"Error Occurred:s {e}")
-            return []
-        
-        return game_achievement
-
-
+    
+    
     def get_recently_played(self):
-        url = f"https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/"
+        url = "https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/"
         params = {"key": self.steam_key, "steamid": self.steam_id}
         response = requests.get(url, params=params)
         
@@ -66,9 +48,47 @@ class owned_Games:
         filtered_result = [{'appid': game['appid'], 'name': game['name'], 'img_icon_url': game['img_icon_url']} for game in recent_games['response']['games']]
 
         return filtered_result
- 
- 
- 
+
+
+
         
-thing = owned_Games(76561198947714890)
-print(thing.get_recently_played())
+    #FIXME: with the other url in deltelre    
+    def get_player_achievements(self, appid):
+        url = "https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v1/"
+        params = {"key": self.steam_key, "steamid": self.steam_id, "appid": appid}
+        response = requests.get(url, params=params)
+        
+        if response.status_code != 200:
+            print(f"Error accessing steam api {response.status_code}")
+            return []
+        try:
+            player_achievements = response.json()
+        except ValueError as e:
+            print(f"Error Occurred:s {e}")
+            return []
+        
+        filtered_result = [{'name': game} for game in player_achievements['playerstats']['achievements'].keys()]
+
+        return filtered_result
+
+
+    def get_game_achievements(self, appid):
+        url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/"
+        params = {"key": self.steam_key, "steamid": self.steam_id, "appid": appid}
+        response = requests.get(url, params=params)
+        
+        if response.status_code != 200:
+            print(f"Error accessing steam api {response.status_code}")
+            return []
+        try:
+            game_achievements = response.json()
+    
+        except ValueError as e:
+            print(f"Error Occurred:s {e}")
+            return []
+        
+        
+        filtered_result2 = [{'name': game['name'], 'displayname': game['displayName'], 'description': game['description'], 'icon': game['icon'], 'icongray': game['icongray']} for game in game_achievements['game']['availableGameStats']['achievements']]
+
+        return filtered_result2
+        

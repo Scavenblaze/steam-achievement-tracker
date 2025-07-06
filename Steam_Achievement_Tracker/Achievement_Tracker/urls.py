@@ -7,6 +7,6 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('landing_page/', views.landing_page, name='landing_page'),
     path('games_list/', views.games_list, name='games_list'),
-    path('games_achievements/', views.games_achievements, name='games_achievements'),
+    path('game/<int:appid>', views.game_achievements, name='game_achievements'),
     
 ]

@@ -2,7 +2,44 @@
 {% block title %} Game achievements {% endblock title %}
 {% block content %}
 
-<p>here comes all the achievements of a specific game</p>
+
+
+<p>here comes all the achievements of player</p>
+{%if player_achievements%}
+
+<ol>
+    {%for achievement in player_achievements%}
+    <li>{{achievement.name}}</li>
+    {%endfor%}
+</ol>
+
+{%else%} <p> You don't have any achievements </p>
+{% endif %}
+
+<br/>
+<br/>
+
+
+
+<p>here comes all the achievements of the game</p>
+{%if game_achievements%}
+
+<ol>
+    {%for achievement in game_achievements%}
+    <li>{{achievement.name}}</li>
+    <ul>
+        <li>{{achievement.displayname}}</li>
+        <ul>
+            <li>{{achievement.description}}</li>
+        </ul>
+    </ul>
+    {%endfor%}
+</ol>
+
+{%else%} <p> Game Does not have any achievements </p>
+{% endif %}
+
+
 <a href="{% url "home" %}"><button class="submit-btn" id="submit">go home</button></a>
 
 {% endblock content %}

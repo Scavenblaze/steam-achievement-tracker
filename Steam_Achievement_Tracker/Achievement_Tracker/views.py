@@ -8,6 +8,7 @@ steam_id = None
 
 
 
+
 def landing_page(request):
     if request.method == "POST":
         steam_id = request.POST.get("steam_id")
@@ -21,33 +22,31 @@ def landing_page(request):
 
 def home(request):
     steam_id = request.COOKIES.get("steam_id", None)
-    api_handler = owned_Games(steam_id)
-    games_list = api_handler.get_recently_played()
+    games_list = owned_Games(steam_id).get_recently_played()
     
     return render(request, 'home.html', {'steam_id': steam_id, 'games_list': games_list})
 
 
 def games_list(request):
     steam_id = request.COOKIES.get("steam_id", None)
-    api_handler = owned_Games(steam_id)
-    games_list = api_handler.get_owned_games()
+    games_list = owned_Games(steam_id).get_owned_games()
     
     return render(request, 'games_list.html', {'games_list': games_list})
 
 
 
-#FIXME complete this render
-def games_achievements(request):
+
+#12210 for gta4
+def game_achievements(request, appid):
     steam_id = request.COOKIES.get("steam_id", None)
-    api_handler = owned_Games(steam_id)
+    player_achievements = owned_Games(steam_id).get_player_achievements(appid)
+    game_achievements = owned_Games(steam_id).get_game_achievements(appid)
     
-    return render(request, 'games_achievements.html')
+    return render(request, 'games_achievements.html', {'player_achievements': player_achievements, 'game_achievements': game_achievements})
 
 
 
 
-
-
-#get player achievements
-#bind recently played and achievements
-#bind games list with achievements
+#FIXME dynamic appid url for game achievements
+#check player and game achievements and render complete incomplete
+#frontend
