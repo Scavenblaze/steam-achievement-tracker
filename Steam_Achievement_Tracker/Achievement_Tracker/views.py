@@ -47,6 +47,6 @@ def game_achievements(request, appid):
 
 
 
-#FIXME dynamic appid url for game achievements
+
 #check player and game achievements and render complete incomplete
 #frontend

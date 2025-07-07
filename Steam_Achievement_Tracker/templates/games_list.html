@@ -11,7 +11,7 @@
 
 <ol>
     {%for game in games_list%}
-    <li>{{game.name}}</li>
+    <a href="{% url "game_achievements" game.appid %}"><li>{{game.name}}</li></a>
     {%endfor%}
 <ol>
 

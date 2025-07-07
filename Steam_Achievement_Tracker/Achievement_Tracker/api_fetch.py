@@ -67,9 +67,12 @@ class owned_Games:
             print(f"Error Occurred:s {e}")
             return []
         
-        filtered_result = [{'name': game} for game in player_achievements['playerstats']['achievements'].keys()]
-
-        return filtered_result
+        if(player_achievements.get('playerstats', {}).get('achievements')):
+        
+            filtered_result = [{'name': game} for game in player_achievements['playerstats']['achievements'].keys()]
+            return filtered_result
+        else:
+            return []
 
 
     def get_game_achievements(self, appid):
@@ -87,8 +90,12 @@ class owned_Games:
             print(f"Error Occurred:s {e}")
             return []
         
-        
-        filtered_result2 = [{'name': game['name'], 'displayname': game['displayName'], 'description': game['description'], 'icon': game['icon'], 'icongray': game['icongray']} for game in game_achievements['game']['availableGameStats']['achievements']]
+        if(game_achievements.get('game')):
+            filtered_result2 = [
+                {'name': game['name'], 'displayname': game['displayName'], 'description': game.get('description', ''), 'icon': game['icon'], 'icongray': game['icongray']}
+                for game in game_achievements['game']['availableGameStats']['achievements']
+            ]
+            return filtered_result2
 
-        return filtered_result2
+        else: return []
         
