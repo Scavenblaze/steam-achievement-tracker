@@ -47,6 +47,6 @@ def game_achievements(request, appid):
 
 
 
-
+#do a check for empty list returned incase of a try catch error in api fetch in each of the html page
 #check player and game achievements and render complete incomplete
 #frontend

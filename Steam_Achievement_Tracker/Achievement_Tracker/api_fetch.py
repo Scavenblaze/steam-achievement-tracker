@@ -10,6 +10,34 @@ class owned_Games:
     def __init__(self, steam_id) -> None:
         self.steam_id = steam_id
         self.steam_key = steam_key
+     
+    #-----------------------------------------------------------------------------------------
+    #FIXME    
+    #test this api out with public and private profile
+    #ref: https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_(v0002)
+    #----------------------------------------------------------------------------------------- 
+    
+    def get_profile(self):
+        url = " http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002"
+        params = {"key": self.steam_key, "steamid": self.steam_id}
+        response = requests.get(url, params=params)
+        
+        if response.status_code != 200:
+            print(f"Error accessing steam api {response.status_code}")
+            return []
+        try:
+            games = response.json()
+        except ValueError as e:
+            print(f"Error occurred: {e}")
+            return []
+        
+        #filtered_result = [{'appid': game['appid'], 'name': game['name'], 'img_icon_url': game['img_icon_url']} for game in games['response']['games']]
+        
+        #return filtered_result
+            
+    
+        
+        
         
     def get_owned_games(self):
         url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/"
